@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Number Guessing Game</h1>
+        
+        <!-- Difficulty Selection -->
+        <div id="difficulty-screen" class="screen active">
+            <h2>Select Difficulty</h2>
+            <div class="difficulty-buttons">
+                <button onclick="startGame('easy')" class="btn easy">Easy (1-50)</button>
+                <button onclick="startGame('medium')" class="btn medium">Medium (1-100)</button>
+                <button onclick="startGame('hard')" class="btn hard">Hard (1-200)</button>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen">
+            <div class="game-info">
+                <div class="score">Score: <span id="current-score">0</span></div>
+                <div class="difficulty">Difficulty: <span id="current-difficulty">-</span></div>
+                <div class="attempts">Attempts left: <span id="attempts-left">-</span></div>
+            </div>
+            
+            <div class="game-area">
+                <p>I'm thinking of a number between <span id="range-display">-</span></p>
+                <input type="number" id="guess-input" placeholder="Enter your guess">
+                <button onclick="checkGuess()" class="btn submit">Submit Guess</button>
+                <button onclick="resetGame()" class="btn reset">New Game</button>
+            </div>
+            
+            <div id="message" class="message"></div>
+            <div id="previous-guesses" class="previous-guesses"></div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="screen">
+            <h2>Game Over!</h2>
+            <div class="final-score">Final Score: <span id="final-score">0</span></div>
+            <div id="game-result-message" class="message"></div>
+            <button onclick="showDifficultyScreen()" class="btn play-again">Play Again</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
