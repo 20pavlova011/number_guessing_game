@@ -13,9 +13,9 @@
         <div class="game-controls">
             <div class="difficulty-selector">
                 <h3>Select Difficulty:</h3>
-                <button id="easy-btn" class="difficulty-btn active">Easy (1-50)</button>
-                <button id="medium-btn" class="difficulty-btn">Medium (1-100)</button>
-                <button id="hard-btn" class="difficulty-btn">Hard (1-200)</button>
+                <button id="easy-btn" class="difficulty-btn active">Easy (1-10)</button>
+                <button id="medium-btn" class="difficulty-btn">Medium (1-50)</button>
+                <button id="hard-btn" class="difficulty-btn">Hard (1-100)</button>
             </div>
             
             <div class="score-display">
@@ -25,18 +25,21 @@
         </div>
 
         <div class="game-area">
+            <div id="game-info">
+                <p>Guess a number between <span id="range-display">1 and 10</span></p>
+                <p>Attempts left: <span id="attempts-left">3</span></p>
+            </div>
+            
             <div class="input-section">
-                <input type="number" id="guess-input" placeholder="Enter your guess" min="1">
-                <button id="guess-btn">Guess</button>
+                <input type="number" id="guess-input" placeholder="Enter your guess" min="1" max="100">
+                <button id="guess-btn">Guess!</button>
                 <button id="reset-btn">New Game</button>
             </div>
             
-            <div class="message" id="message"></div>
+            <div id="message" class="message"></div>
             
-            <div class="game-info">
-                <p>Attempts: <span id="attempts">0</span></p>
-                <p>Range: <span id="range">1-50</span></p>
-                <p>Previous guesses: <span id="previous-guesses"></span></p>
+            <div id="previous-guesses">
+                <p>Previous guesses: <span id="guesses-list"></span></p>
             </div>
         </div>
     </div>
