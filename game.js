@@ -1,177 +1,150 @@
 class NumberGuessingGame {
     constructor() {
         this.difficultySettings = {
-            easy: { min: 1, max: 50, maxAttempts: 10, points: 10 },
-            medium: { min: 1, max: 100, maxAttempts: 7, points: 20 },
-            hard: { min: 1, max: 200, maxAttempts: 5, points: 30 }
+            easy: { range: 10, attempts: 3, points: 10 },
+            medium: { range: 50, attempts: 5, points: 20 },
+            hard: { range: 100, attempts: 7, points: 30 }
         };
         
         this.currentDifficulty = 'easy';
         this.score = 0;
         this.highScore = localStorage.getItem('highScore') || 0;
-        this.attempts = 0;
         this.previousGuesses = [];
-        this.targetNumber = null;
-        this.gameActive = false;
         
-        this.initializeElements();
-        this.setupEventListeners();
+        this.initializeGame();
+        this.bindEvents();
         this.updateDisplay();
-        this.startNewGame();
     }
-    
-    initializeElements() {
-        // Difficulty buttons
-        this.easyBtn = document.getElementById('easy-btn');
-        this.mediumBtn = document.getElementById('medium-btn');
-        this.hardBtn = document.getElementById('hard-btn');
+
+    initializeGame() {
+        const settings = this.difficultySettings[this.currentDifficulty];
+        this.targetNumber = Math.floor(Math.random() * settings.range) + 1;
+        this.remainingAttempts = settings.attempts;
+        this.previousGuesses = [];
         
-        // Game elements
-        this.guessInput = document.getElementById('guess-input');
-        this.guessBtn = document.getElementById('guess-btn');
-        this.resetBtn = document.getElementById('reset-btn');
-        this.messageEl = document.getElementById('message');
-        
-        // Display elements
-        this.scoreEl = document.getElementById('score');
-        this.highScoreEl = document.getElementById('high-score');
-        this.attemptsEl = document.getElementById('attempts');
-        this.rangeEl = document.getElementById('range');
-        this.previousGuessesEl = document.getElementById('previous-guesses');
+        console.log('Target number:', this.targetNumber); // For debugging
     }
-    
-    setupEventListeners() {
+
+    bindEvents() {
         // Difficulty buttons
-        this.easyBtn.addEventListener('click', () => this.setDifficulty('easy'));
-        this.mediumBtn.addEventListener('click', () => this.setDifficulty('medium'));
-        this.hardBtn.addEventListener('click', () => this.setDifficulty('hard'));
+        document.getElementById('easy-btn').addEventListener('click', () => this.setDifficulty('easy'));
+        document.getElementById('medium-btn').addEventListener('click', () => this.setDifficulty('medium'));
+        document.getElementById('hard-btn').addEventListener('click', () => this.setDifficulty('hard'));
         
         // Game buttons
-        this.guessBtn.addEventListener('click', () => this.makeGuess());
-        this.resetBtn.addEventListener('click', () => this.startNewGame());
+        document.getElementById('guess-btn').addEventListener('click', () => this.makeGuess());
+        document.getElementById('reset-btn').addEventListener('click', () => this.resetGame());
         
-        // Enter key for guess input
-        this.guessInput.addEventListener('keypress', (e) => {
+        // Enter key support
+        document.getElementById('guess-input').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 this.makeGuess();
             }
         });
     }
-    
+
     setDifficulty(difficulty) {
-        if (this.currentDifficulty === difficulty) return;
-        
         // Update active button
         document.querySelectorAll('.difficulty-btn').forEach(btn => btn.classList.remove('active'));
         document.getElementById(`${difficulty}-btn`).classList.add('active');
         
         this.currentDifficulty = difficulty;
-        this.startNewGame();
+        this.resetGame();
     }
-    
-    startNewGame() {
-        const settings = this.difficultySettings[this.currentDifficulty];
-        this.targetNumber = this.generateRandomNumber(settings.min, settings.max);
-        this.attempts = 0;
-        this.previousGuesses = [];
-        this.gameActive = true;
-        
-        this.updateDisplay();
-        this.showMessage(`New game started! Guess a number between ${settings.min} and ${settings.max}`, 'info');
-        this.guessInput.focus();
-    }
-    
-    generateRandomNumber(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-    
+
     makeGuess() {
-        if (!this.gameActive) {
-            this.showMessage('Game over! Start a new game to play again.', 'error');
-            return;
-        }
-        
-        const guess = parseInt(this.guessInput.value);
-        const settings = this.difficultySettings[this.currentDifficulty];
+        const guessInput = document.getElementById('guess-input');
+        const guess = parseInt(guessInput.value);
         
         // Validate input
-        if (isNaN(guess) || guess < settings.min || guess > settings.max) {
-            this.showMessage(`Please enter a valid number between ${settings.min} and ${settings.max}`, 'error');
+        if (isNaN(guess)) {
+            this.showMessage('Please enter a valid number!', 'error');
             return;
         }
         
-        this.attempts++;
-        this.previousGuesses.push(guess);
+        const settings = this.difficultySettings[this.currentDifficulty];
+        if (guess < 1 || guess > settings.range) {
+            this.showMessage(`Please enter a number between 1 and ${settings.range}`, 'error');
+            return;
+        }
         
+        // Check if already guessed
+        if (this.previousGuesses.includes(guess)) {
+            this.showMessage('You already guessed that number!', 'error');
+            return;
+        }
+        
+        this.previousGuesses.push(guess);
+        this.remainingAttempts--;
+        
+        // Check guess
         if (guess === this.targetNumber) {
             this.handleWin();
+        } else if (this.remainingAttempts === 0) {
+            this.handleLoss();
         } else {
             this.handleIncorrectGuess(guess);
         }
         
-        this.guessInput.value = '';
+        guessInput.value = '';
         this.updateDisplay();
-        
-        // Check if game over due to max attempts
-        if (this.attempts >= settings.maxAttempts && guess !== this.targetNumber) {
-            this.handleGameOver();
-        }
     }
-    
+
     handleWin() {
-        const settings = this.difficultySettings[this.currentDifficulty];
-        const pointsEarned = Math.max(1, Math.floor(settings.points * (1 - (this.attempts - 1) / settings.maxAttempts)));
-        
-        this.score += pointsEarned;
-        this.gameActive = false;
+        const points = this.difficultySettings[this.currentDifficulty].points;
+        this.score += points;
         
         if (this.score > this.highScore) {
             this.highScore = this.score;
             localStorage.setItem('highScore', this.highScore);
         }
         
-        this.showMessage(
-            `🎉 Correct! The number was ${this.targetNumber}. You earned ${pointsEarned} points!`,
-            'success'
-        );
+        this.showMessage(`🎉 Correct! The number was ${this.targetNumber}. You earned ${points} points!`, 'success');
+        document.getElementById('guess-btn').disabled = true;
     }
-    
+
+    handleLoss() {
+        this.showMessage(`💀 Game Over! The number was ${this.targetNumber}. Better luck next time!`, 'error');
+        document.getElementById('guess-btn').disabled = true;
+    }
+
     handleIncorrectGuess(guess) {
-        const settings = this.difficultySettings[this.currentDifficulty];
-        const attemptsLeft = settings.maxAttempts - this.attempts;
-        
-        let hint = guess < this.targetNumber ? 'higher' : 'lower';
-        let message = `Too ${hint}! ${attemptsLeft} attempt(s) left.`;
-        
-        this.showMessage(message, 'error');
+        const hint = guess < this.targetNumber ? 'higher' : 'lower';
+        this.showMessage(`Wrong! Try a ${hint} number. ${this.remainingAttempts} attempts remaining.`, 'info');
     }
-    
-    handleGameOver() {
-        this.gameActive = false;
-        this.showMessage(
-            `Game Over! The number was ${this.targetNumber}. Your score: ${this.score}`,
-            'error'
-        );
-    }
-    
+
     showMessage(text, type) {
-        this.messageEl.textContent = text;
-        this.messageEl.className = `message ${type}`;
+        const messageElement = document.getElementById('message');
+        messageElement.textContent = text;
+        messageElement.className = `message ${type}`;
     }
-    
+
+    resetGame() {
+        this.initializeGame();
+        document.getElementById('guess-btn').disabled = false;
+        document.getElementById('guess-input').value = '';
+        this.showMessage('New game started! Make your first guess.', 'info');
+        this.updateDisplay();
+    }
+
     updateDisplay() {
         const settings = this.difficultySettings[this.currentDifficulty];
         
-        this.scoreEl.textContent = this.score;
-        this.highScoreEl.textContent = this.highScore;
-        this.attemptsEl.textContent = `${this.attempts}/${settings.maxAttempts}`;
-        this.rangeEl.textContent = `${settings.min}-${settings.max}`;
-        this.previousGuessesEl.textContent = this.previousGuesses.join(', ') || 'None';
+        // Update range display
+        document.getElementById('range-display').textContent = `1 and ${settings.range}`;
         
-        // Update input placeholder
-        this.guessInput.placeholder = `Enter guess (${settings.min}-${settings.max})`;
-        this.guessInput.min = settings.min;
-        this.guessInput.max = settings.max;
+        // Update attempts
+        document.getElementById('attempts-left').textContent = this.remainingAttempts;
+        
+        // Update scores
+        document.getElementById('score').textContent = this.score;
+        document.getElementById('high-score').textContent = this.highScore;
+        
+        // Update previous guesses
+        const guessesList = document.getElementById('guesses-list');
+        guessesList.textContent = this.previousGuesses.length > 0 
+            ? this.previousGuesses.join(', ') 
+            : 'None';
     }
 }
 
