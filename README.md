@@ -1,47 +1,48 @@
-## Number Guessing Game
+# Number Guessing Game
 
 A simple, interactive number guessing game built with HTML, CSS, and JavaScript featuring multiple difficulty levels and score tracking.
 
-### How to Use
+## How to Use
 
-1. **Setup**: Save all three files (`index.html`, `styles.css`, `game.js`) in the same folder.
+### Setup
+1. Create three files in the same directory:
+   - `index.html`
+   - `styles.css`
+   - `game.js`
 
-2. **Launch**: Open `index.html` in your web browser.
+2. Copy the respective code into each file
 
-3. **Gameplay**:
-   - **Select Difficulty**: Choose from Easy (1-50), Medium (1-100), or Hard (1-200)
-   - **Make Guesses**: Enter your number guess and click "Guess" or press Enter
-   - **Get Hints**: The game tells you if your guess is too high or too low
-   - **Track Progress**: See your attempts, previous guesses, and score
+3. Open `index.html` in a web browser to start playing
 
-### Features
+### Game Features
 
-- **Three Difficulty Levels**:
-  - Easy: 1-50 range, 10 attempts, 10 base points
-  - Medium: 1-100 range, 7 attempts, 20 base points
-  - Hard: 1-200 range, 5 attempts, 30 base points
+**Difficulty Levels:**
+- **Easy**: Guess numbers between 1-10 (3 attempts, 10 points per win)
+- **Medium**: Guess numbers between 1-50 (5 attempts, 20 points per win)
+- **Hard**: Guess numbers between 1-100 (7 attempts, 30 points per win)
 
-- **Scoring System**:
-  - Points are awarded based on difficulty and number of attempts
-  - Higher scores for fewer attempts
-  - Persistent high score storage using localStorage
+**Gameplay:**
+1. Select your preferred difficulty level
+2. Enter your guess in the input field
+3. Click "Guess!" or press Enter to submit
+4. Receive hints if your guess is too high or too low
+5. Win by guessing the correct number within the allowed attempts
 
-- **Game Information**:
-  - Current score and high score display
-  - Attempt counter with maximum attempts
-  - Previous guesses history
-  - Visual feedback messages
+**Scoring:**
+- Earn points for each correct guess based on difficulty
+- High score is saved in your browser's local storage
+- Previous guesses are displayed to help you strategize
 
 ### Controls
+- **Difficulty Buttons**: Switch between Easy, Medium, and Hard modes
+- **Guess Button**: Submit your current guess
+- **New Game Button**: Start a new game with current difficulty
+- **Enter Key**: Alternative way to submit guesses
 
-- **Mouse**: Click buttons to interact
-- **Keyboard**: Press Enter to submit guesses
-- **Responsive Design**: Works on desktop and mobile devices
+### Browser Compatibility
+This game works in all modern browsers that support:
+- ES6 JavaScript classes
+- CSS Flexbox
+- Local Storage API
 
-### File Structure
-
-- `index.html` - Main HTML structure
-- `styles.css` - Styling and responsive design
-- `game.js` - Game logic and functionality
-
-Enjoy playing! 🎯
+Enjoy the game! 🎯
