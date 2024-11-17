@@ -10,37 +10,30 @@
     <div class="container">
         <h1>🎯 Number Guessing Game</h1>
         
-        <div class="game-controls">
-            <div class="difficulty-selector">
-                <h3>Select Difficulty:</h3>
-                <button id="easy-btn" class="difficulty-btn active">Easy (1-10)</button>
-                <button id="medium-btn" class="difficulty-btn">Medium (1-50)</button>
-                <button id="hard-btn" class="difficulty-btn">Hard (1-100)</button>
-            </div>
-            
-            <div class="score-display">
-                <p>Score: <span id="score">0</span></p>
-                <p>High Score: <span id="high-score">0</span></p>
+        <div class="game-setup">
+            <h3>Select Difficulty:</h3>
+            <div class="difficulty-buttons">
+                <button id="easy" class="difficulty-btn active">Easy (1-10)</button>
+                <button id="medium" class="difficulty-btn">Medium (1-50)</button>
+                <button id="hard" class="difficulty-btn">Hard (1-100)</button>
             </div>
         </div>
 
         <div class="game-area">
-            <div id="game-info">
-                <p>Guess a number between <span id="range-display">1 and 10</span></p>
-                <p>Attempts left: <span id="attempts-left">3</span></p>
+            <div class="score-board">
+                <p>Score: <span id="score">0</span></p>
+                <p>High Score: <span id="highScore">0</span></p>
             </div>
-            
-            <div class="input-section">
-                <input type="number" id="guess-input" placeholder="Enter your guess" min="1" max="100">
-                <button id="guess-btn">Guess!</button>
-                <button id="reset-btn">New Game</button>
+
+            <div class="game-controls">
+                <input type="number" id="guessInput" placeholder="Enter your guess" min="1">
+                <button id="submitGuess">Submit Guess</button>
+                <button id="newGame">New Game</button>
             </div>
-            
+
             <div id="message" class="message"></div>
-            
-            <div id="previous-guesses">
-                <p>Previous guesses: <span id="guesses-list"></span></p>
-            </div>
+            <div id="attempts" class="attempts">Attempts: 0</div>
+            <div id="previousGuesses" class="previous-guesses"></div>
         </div>
     </div>
 
