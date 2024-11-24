@@ -1,48 +1,54 @@
-# Number Guessing Game
+## Number Guessing Game
 
-A simple, interactive number guessing game built with HTML, CSS, and JavaScript featuring multiple difficulty levels and score tracking.
+A simple, interactive number guessing game built with vanilla JavaScript featuring multiple difficulty levels and score tracking.
 
-## How to Use
+### How to Use
 
-### Setup
-1. Create three files in the same directory:
-   - `index.html`
-   - `styles.css`
-   - `game.js`
+1. **Setup**: Save all three files (`index.html`, `styles.css`, `game.js`) in the same folder.
 
-2. Copy the respective code into each file
+2. **Launch**: Open `index.html` in your web browser.
 
-3. Open `index.html` in a web browser to start playing
+3. **Game Features**:
 
-### Game Features
+   - **Difficulty Levels**:
+     - **Easy**: Numbers 1-10, 5 attempts
+     - **Medium**: Numbers 1-50, 7 attempts  
+     - **Hard**: Numbers 1-100, 10 attempts
 
-**Difficulty Levels:**
-- **Easy**: Guess numbers between 1-10 (3 attempts, 10 points per win)
-- **Medium**: Guess numbers between 1-50 (5 attempts, 20 points per win)
-- **Hard**: Guess numbers between 1-100 (7 attempts, 30 points per win)
+   - **Scoring System**:
+     - Points are awarded based on remaining attempts and difficulty multiplier
+     - Easy: 1x multiplier, Medium: 2x multiplier, Hard: 3x multiplier
+     - Formula: `(maxAttempts - attemptsUsed + 1) * difficultyMultiplier`
 
-**Gameplay:**
-1. Select your preferred difficulty level
-2. Enter your guess in the input field
-3. Click "Guess!" or press Enter to submit
-4. Receive hints if your guess is too high or too low
-5. Win by guessing the correct number within the allowed attempts
+   - **Game Controls**:
+     - Select difficulty level by clicking the buttons
+     - Enter your guess in the input field
+     - Click "Submit Guess" or press Enter
+     - Start a new game anytime with "New Game" button
 
-**Scoring:**
-- Earn points for each correct guess based on difficulty
-- High score is saved in your browser's local storage
-- Previous guesses are displayed to help you strategize
+4. **Game Flow**:
+   - Choose your difficulty level
+   - Guess numbers within the specified range
+   - Receive hints (higher/lower) for incorrect guesses
+   - Win by guessing correctly within the attempt limit
+   - Track your score and high score (stored in browser)
 
-### Controls
-- **Difficulty Buttons**: Switch between Easy, Medium, and Hard modes
-- **Guess Button**: Submit your current guess
-- **New Game Button**: Start a new game with current difficulty
-- **Enter Key**: Alternative way to submit guesses
+### Files Overview
+
+- `index.html` - Main HTML structure
+- `styles.css` - Styling and responsive design
+- `game.js` - Game logic and functionality
 
 ### Browser Compatibility
-This game works in all modern browsers that support:
-- ES6 JavaScript classes
-- CSS Flexbox
-- Local Storage API
 
-Enjoy the game! 🎯
+Works in all modern browsers that support ES6+ features and localStorage.
+
+### Customization
+
+You can easily modify the game by:
+- Changing difficulty ranges in the `difficultySettings` object
+- Adjusting scoring multipliers
+- Modifying CSS for different visual themes
+- Adding new difficulty levels
+
+Enjoy playing! 🎯
