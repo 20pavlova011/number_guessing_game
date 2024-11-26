@@ -4,37 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Number Guessing Game</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <h1>🎯 Number Guessing Game</h1>
         
-        <div class="game-setup">
-            <h3>Select Difficulty:</h3>
-            <div class="difficulty-buttons">
-                <button id="easy" class="difficulty-btn active">Easy (1-10)</button>
-                <button id="medium" class="difficulty-btn">Medium (1-50)</button>
-                <button id="hard" class="difficulty-btn">Hard (1-100)</button>
-            </div>
+        <div class="game-controls">
+            <label for="difficulty">Select Difficulty:</label>
+            <select id="difficulty">
+                <option value="easy">Easy (1-50, 10 attempts)</option>
+                <option value="medium">Medium (1-100, 7 attempts)</option>
+                <option value="hard">Hard (1-200, 5 attempts)</option>
+            </select>
+            <button id="startBtn">Start New Game</button>
+        </div>
+
+        <div class="game-info">
+            <p>Attempts left: <span id="attemptsLeft">-</span></p>
+            <p>Score: <span id="score">0</span></p>
+            <p>High Score: <span id="highScore">0</span></p>
         </div>
 
         <div class="game-area">
-            <div class="score-board">
-                <p>Score: <span id="score">0</span></p>
-                <p>High Score: <span id="highScore">0</span></p>
-            </div>
-
-            <div class="game-controls">
-                <input type="number" id="guessInput" placeholder="Enter your guess" min="1">
-                <button id="submitGuess">Submit Guess</button>
-                <button id="newGame">New Game</button>
-            </div>
-
-            <div id="message" class="message"></div>
-            <div id="attempts" class="attempts">Attempts: 0</div>
-            <div id="previousGuesses" class="previous-guesses"></div>
+            <input type="number" id="guessInput" placeholder="Enter your guess" disabled>
+            <button id="guessBtn" disabled>Guess</button>
+            <button id="hintBtn" disabled>Get Hint</button>
         </div>
+
+        <div id="message" class="message"></div>
+        
+        <div id="history" class="history"></div>
     </div>
 
     <script src="game.js"></script>
